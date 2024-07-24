@@ -34,7 +34,7 @@ class MainTest {
 
         Main.main(new String[]{logFile.toString()});
 
-        String expectedOutput = "ALICE99 4 240\nCHARLIE 3 37\n";
+        String expectedOutput = "ALICE99 4 240\r\nCHARLIE 3 37\r\n";
         assertEquals(expectedOutput, outContent.toString());
     }
 }
