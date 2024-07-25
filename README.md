@@ -35,13 +35,13 @@ This Java application provides a summary of each user's total session time to ha
 ## Building the Project
 To build the project, run:
 ```
-mvn clean install
+mvn clean package
 ```
 
 ## Running the Application
 After building, run the application with:
 ```
-java -jar target/fair-billing-1.0-SNAPSHOT.jar path/to/logfile.txt
+java -jar target/FairBilling-1.0-SNAPSHOT-jar-with-dependencies.jar path/to/logfile.txt
 ```
 
 ## Input Format
