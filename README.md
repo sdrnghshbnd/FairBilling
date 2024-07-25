@@ -77,3 +77,9 @@ Run unit tests with:
 ```
 mvn test
 ```
+Create test report with:
+```
+mvn clean test surefire-report:report
+```
+and then find the report in :
+`target/surefire-reports/surefire-report.html`
