@@ -34,17 +34,17 @@ This Java application provides a summary of each user's total session time to ha
 
 ## Building the Project
 To build the project, run:
-mvn clean install
+```mvn clean install```
 
 ## Running the Application
 After building, run the application with:
-java -jar target/fair-billing-1.0-SNAPSHOT.jar path/to/logfile.txt
+```java -jar target/fair-billing-1.0-SNAPSHOT.jar path/to/logfile.txt```
 
 ## Input Format
 The log file should contain lines in the following format:
-`
+```
 HH:MM:SS USERNAME Start|End
-`
+```
 
 Example:
 ```
@@ -58,7 +58,7 @@ Example:
 
 ## Output Format
 The application prints session details for each user:
-USERNAME SESSION_COUNT TOTAL_DURATION_IN_SECONDS
+```USERNAME SESSION_COUNT TOTAL_DURATION_IN_SECONDS```
 
 Example:
 `
@@ -67,4 +67,4 @@ ALICE99 4 240
 
 ## Testing
 Run unit tests with:
-mvn test
+```mvn test```
