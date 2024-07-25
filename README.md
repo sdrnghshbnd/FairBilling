@@ -42,22 +42,28 @@ java -jar target/fair-billing-1.0-SNAPSHOT.jar path/to/logfile.txt
 
 ## Input Format
 The log file should contain lines in the following format:
+`
 HH:MM:SS USERNAME Start|End
+`
 
 Example:
+`
 14:02:03 ALICE99 Start
 14:02:34 ALICE99 End
 14:02:58 ALICE99 Start
 14:03:33 ALICE99 Start
 14:03:35 ALICE99 End
 14:04:05 ALICE99 End
+`
 
 ## Output Format
 The application prints session details for each user:
 USERNAME SESSION_COUNT TOTAL_DURATION_IN_SECONDS
 
 Example:
+`
 ALICE99 4 240
+`
 
 ## Testing
 Run unit tests with:
