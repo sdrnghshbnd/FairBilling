@@ -1,32 +1,30 @@
-//package com.bt.processor;
-//
-//import com.bt.model.UserSessionStart;
-//import org.junit.jupiter.api.Test;
-//import java.io.ByteArrayOutputStream;
-//import java.io.PrintStream;
-//import java.util.HashMap;
-//import java.util.Map;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//
-//class BillingCalculatorTest {
-//
-//    @Test
-//    void testCalculateBilling() {
-//        Map<String, Long> usersDuration = new HashMap<>();
-//        UserSessionStart alice = new UserSessionStart("ALICE99");
-//        usersDuration.put("ALICE99", 0L);
-//
-//        UserSessionStart charlie = new UserSessionStart("CHARLIE");
-//        usersDuration.put("CHARLIE", 0L);
-//
-//        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-//        System.setOut(new PrintStream(outContent));
-//
-//        BillingCalculator calculator = new BillingCalculator();
-//        calculator.calculateBilling(usersDuration);
-//
-//        String expectedOutput = "ALICE99 0\nCHARLIE 0\n";
-//        assertEquals(expectedOutput, outContent.toString());
-//    }
-//}
+package com.bt.processor;
+
+import com.bt.model.SessionDetail;
+import org.junit.jupiter.api.Test;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+class BillingCalculatorTest {
+
+    @Test
+    void testCalculateBilling() {
+        Map<String, SessionDetail> usersSessionsDetail = new HashMap<>();
+        usersSessionsDetail.put("ALICE99", new SessionDetail(4, 240));
+        usersSessionsDetail.put("CHARLIE", new SessionDetail(3, 37));
+
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        BillingCalculator calculator = new BillingCalculator();
+        calculator.calculateBilling(usersSessionsDetail);
+
+        String expectedOutput = "ALICE99 4 240\r\nCHARLIE 3 37\r\n";
+        assertEquals(expectedOutput, outContent.toString());
+    }
+}

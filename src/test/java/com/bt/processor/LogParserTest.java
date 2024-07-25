@@ -1,6 +1,7 @@
 package com.bt.processor;
 
 import com.bt.model.SessionDetail;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -11,6 +12,12 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class LogParserTest {
+    private LogParser logParser;
+
+    @BeforeEach
+    void setUp() {
+        logParser = new LogParser();
+    }
 
     @Test
     void testParseLogFile(@TempDir Path tempDir) throws Exception {
@@ -40,8 +47,7 @@ class LogParserTest {
 
         ).getBytes());
 
-        LogParser parser = new LogParser();
-        Map<String, SessionDetail>  usersSessionsDetail = parser.parseLogFile(logFile);
+        Map<String, SessionDetail> usersSessionsDetail = logParser.parseLogFile(logFile);
 
         assertEquals(4, usersSessionsDetail.size());
         assertTrue(usersSessionsDetail.containsKey("ALICE99"));
@@ -60,5 +66,56 @@ class LogParserTest {
 
         assertEquals(1, usersSessionsDetail.get("DAVID").getSessionCounter());
         assertEquals(140, usersSessionsDetail.get("DAVID").getTotalSessionDuration());
+    }
+
+    @Test
+    void testParseLogFileWithMissingStart(@TempDir Path tempDir) throws Exception {
+        Path logFile = tempDir.resolve("test.log");
+        Files.write(logFile, (
+                "14:02:05 ALICE99 End\n" +
+                        "14:02:34 ALICE99 Start\n" +
+                        "14:03:35 ALICE99 End"
+        ).getBytes());
+
+        Map<String, SessionDetail> result = logParser.parseLogFile(logFile);
+
+        SessionDetail aliceDetail = result.get("ALICE99");
+        assertEquals(2, aliceDetail.getSessionCounter());
+        assertEquals(61, aliceDetail.getTotalSessionDuration());
+    }
+
+    @Test
+    void testParseLogFileWithMissingEnd(@TempDir Path tempDir) throws Exception {
+        Path logFile = tempDir.resolve("test.log");
+        Files.write(logFile, (
+                "14:02:03 ALICE99 Start\n" +
+                        "14:02:34 ALICE99 End\n" +
+                        "14:03:35 ALICE99 Start"
+        ).getBytes());
+
+        Map<String, SessionDetail> result = logParser.parseLogFile(logFile);
+
+        SessionDetail aliceDetail = result.get("ALICE99");
+        assertEquals(2, aliceDetail.getSessionCounter());
+        assertEquals(31, aliceDetail.getTotalSessionDuration());
+    }
+
+    @Test
+    void testParseLogFileWithInvalidLines(@TempDir Path tempDir) throws Exception {
+        Path logFile = tempDir.resolve("test.log");
+        Files.write(logFile, (
+                "14:02:03 ALICE99 Start\n" +
+                        "Invalid line\n" +
+                        "14:02:34 ALICE99 End\n" +
+                        "Another invalid line\n" +
+                        "14:03:35 ALICE99 Start\n" +
+                        "14:04:05 ALICE99 End"
+        ).getBytes());
+
+        Map<String, SessionDetail> result = logParser.parseLogFile(logFile);
+
+        SessionDetail aliceDetail = result.get("ALICE99");
+        assertEquals(2, aliceDetail.getSessionCounter());
+        assertEquals(61, aliceDetail.getTotalSessionDuration());
     }
 }

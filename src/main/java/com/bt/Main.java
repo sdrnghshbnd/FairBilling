@@ -5,6 +5,9 @@ import com.bt.processor.LogParser;
 
 import java.nio.file.Paths;
 
+/**
+ * Main class to run the Fair Billing application.
+ */
 public class Main {
     public static void main(String[] args) {
         if (args.length != 1) {
