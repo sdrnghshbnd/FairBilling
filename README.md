@@ -68,9 +68,9 @@ USERNAME SESSION_COUNT TOTAL_DURATION_IN_SECONDS
 ```
 
 Example:
-`
+```
 ALICE99 4 240
-`
+```
 
 ## Testing
 Run unit tests with:
