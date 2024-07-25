@@ -24,7 +24,7 @@ class BillingCalculatorTest {
         BillingCalculator calculator = new BillingCalculator();
         calculator.calculateBilling(usersSessionsDetail);
 
-        String expectedOutput = "ALICE99 4 240\r\nCHARLIE 3 37\r\n";
+        String expectedOutput = "ALICE99 4 240" + System.lineSeparator() + "CHARLIE 3 37" + System.lineSeparator();
         assertEquals(expectedOutput, outContent.toString());
     }
 }
